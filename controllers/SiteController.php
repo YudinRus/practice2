@@ -14,4 +14,15 @@ class SiteController {
         
         return true;
     }
+    
+    public function actionContact()
+    {
+        $mail = 'php.start@mail.ru';
+        $subject = 'Тема письма: ';
+        $message = 'Тема письма: ';
+        $result = mail($mail, $subject, $message);
+        
+        var_dump($result);
+        
+    }
 }

@@ -15,7 +15,25 @@ class User {
         
         return $result->execute();
     }
-    
+    /*
+     * Редактирование данных пользователя
+     * @param string $name
+     * @param string $password
+     */
+    public static function edit($id, $name, $password)
+    {
+        $db = Db::getConnection();
+        
+        $sql = "update user set name = :name, password = :password where id = :id";
+        
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindParam(':name', $name, PDO::PARAM_STR);
+        $result->bindParam(':password', $password, PDO::PARAM_STR);
+        return $result->execute();
+    }
+
+
     /*
      * Запоминаем пользователя
      * @param string $email
@@ -106,13 +124,13 @@ class User {
         $sql = 'select * from user where email = :email and password = :password';
         
         $result = $db->prepare($sql);
-        $result->bindParam(':email', $email, PDO::PARAM_INT);
+        $result->bindParam(':email', $email, PDO::PARAM_STR);
         $result->bindParam(':password', $password, PDO::PARAM_STR);
         $result->execute();
         
         $user = $result->fetch();
         if ($user) {
-            return user['id'];
+            return $user['id'];
         }
         return false;
     }
@@ -124,7 +142,7 @@ class User {
             $db = Db::getConnection();
             $sql = 'select * from user where id = :id';
             
-            $result = $db->query($sql);
+            $result = $db->prepare($sql);
             $result->bindParam(':id', $id, PDO::PARAM_INT);
             
             // Указываем, что хотим получить данные в виде массива

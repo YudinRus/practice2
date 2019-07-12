@@ -66,7 +66,7 @@ class UserController {
                 
                 // проверяем, существует ли пользователь
                 $userId = User::chekUserData($email, $password);
-                
+                                
                 if ($userId == false) {
                     // Если данные неправильные - показываем ошибку
                     $errors[] = 'Неправильные данные для входа на сайт';
